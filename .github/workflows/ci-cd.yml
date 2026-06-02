@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: ["null"]
+    branches: ["none"]
 
 jobs:
   build-scan-push:
