@@ -1,0 +1,5 @@
+# Trivy configuration example
+ignore-unfixed: false
+vuln-type:
+  - os
+  - library

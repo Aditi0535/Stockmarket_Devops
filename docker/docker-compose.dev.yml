@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  backend:
+    build: ../app/backend
+    container_name: stock-backend-dev
+    ports:
+      - "80:3000"
+    environment:
+      - NODE_ENV=development
+  frontend:
+    build: ../app/frontend
+    container_name: stock-frontend-dev
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

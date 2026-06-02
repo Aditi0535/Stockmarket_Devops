@@ -1,0 +1,28 @@
+# Ignore Git files
+.git
+.gitignore
+
+# Local build artifacts
+node_modules
+dist
+build
+coverage
+
+# Terraform local state
+terraform/.terraform
+terraform.tfstate*
+*.tfvars
+*.tfplan
+
+# Ignore config not needed in container
+.vscode
+*.log
+*.md
+.env*
+
+# Docker files not required inside build context
+docker-compose.yml
+docker-compose.prod.yml
+
+scripts/
+docs/

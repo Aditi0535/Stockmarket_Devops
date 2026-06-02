@@ -1,0 +1,13 @@
+{
+  "dashboard": {
+    "title": "App Basic Dashboard",
+    "uid": "app-basic",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Backend Requests (placeholder)",
+        "targets": []
+      }
+    ]
+  }
+}

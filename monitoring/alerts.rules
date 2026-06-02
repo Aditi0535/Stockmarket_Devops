@@ -1,0 +1,10 @@
+groups:
+  - name: example.rules
+    rules:
+      - alert: HighCPUUsage
+        expr: node_cpu_seconds_total{mode!="idle"} > 0.9
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
