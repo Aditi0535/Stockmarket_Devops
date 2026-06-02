@@ -1,9 +1,21 @@
-FROM node:18-alpine
+FROM node:20-alpine
+
 WORKDIR /app
 
+# Copy dependency files
 COPY package*.json ./
-RUN npm install
+
+# Install production dependencies only
+RUN npm ci --omit=dev
+
+# Copy application code
 COPY . .
 
-EXPOSE 80
+# Production environment
+ENV NODE_ENV=production
+
+# Backend API port
+EXPOSE 5000
+
+# Start server
 CMD ["npm", "start"]
