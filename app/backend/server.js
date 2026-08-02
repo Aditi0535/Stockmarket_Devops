@@ -35,6 +35,13 @@ const httpRequestsInProgress = new client.Gauge({
   registers: [register],
 });
 
+const backendErrorsTotal = new client.Counter({
+  name: "backend_errors_total",
+  help: "Total number of backend HTTP errors",
+  labelNames: ["method", "route", "status_code"],
+  registers: [register],
+});
+
 /** 
  * Allowed Origins
  */
@@ -75,22 +82,35 @@ app.use((req, res, next) => {
   httpRequestsInProgress.inc();
 
   res.on("finish", () => {
+    // Request completed
     httpRequestsInProgress.dec();
 
     const route = req.route?.path || req.path;
 
+    // Count every request
     httpRequestsTotal.inc({
       method: req.method,
       route,
       status_code: res.statusCode,
     });
 
+    // Count only failed requests (4xx & 5xx)
+    if (res.statusCode >= 400) {
+      backendErrorsTotal.inc({
+        method: req.method,
+        route,
+        status_code: res.statusCode,
+      });
+    }
+
+    // Record request duration
     end({
       method: req.method,
       route,
       status_code: res.statusCode,
     });
 
+    // Log request
     console.log(`${req.method} ${req.originalUrl} ${res.statusCode}`);
   });
 
