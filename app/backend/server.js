@@ -1,13 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const client = require('prom-client');
 require('dotenv').config();
 
 const contactRoutes = require('./routes/contactRoutes');
 
 const app = express();
 
-/**
+const register = new client.Registry();
+
+client.collectDefaultMetrics({
+  register,
+});
+
+/** 
  * Allowed Origins
  */
 const allowedOrigins = [
@@ -68,6 +75,14 @@ app.get('/health', (req, res) => {
         : 'Disconnected',
     timestamp: new Date().toISOString()
   });
+});
+
+/**
+ * Prometheus Metrics
+ */
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
 });
 
 /**
