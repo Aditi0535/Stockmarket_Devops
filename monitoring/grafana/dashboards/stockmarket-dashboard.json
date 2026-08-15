@@ -123,8 +123,8 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "reqps",
-          "decimals": 3,
+          "unit": "short",
+          "decimals": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -133,11 +133,11 @@
                 "color": "green"
               },
               {
-                "value": 0.01,
+                "value": 1,
                 "color": "yellow"
               },
               {
-                "value": 0.1,
+                "value": 5,
                 "color": "red"
               }
             ]
@@ -611,8 +611,8 @@
     ]
   },
   "time": {
-    "from": "now-15m",
-    "to": "now"
+  "from": "now-1h",
+  "to": "now"
   },
   "timezone": "browser",
   "title": "StockMarket Monitoring",
