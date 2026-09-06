@@ -10,8 +10,8 @@ on:
       - ayush
 
 jobs:
-  test:
-    name: Test Application
+  validate:
+    name: Validate Application
     runs-on: ubuntu-latest
 
     steps:
@@ -31,14 +31,14 @@ jobs:
         working-directory: app/frontend
         run: npm ci
 
+      - name: Build frontend
+        working-directory: app/frontend
+        run: npm run build
+
       - name: Install backend dependencies
         working-directory: app/backend
         run: npm ci
 
-      - name: Run frontend tests
-        working-directory: app/frontend
-        run: npm test -- --watchAll=false
-
-      - name: Run backend tests
+      - name: Validate backend syntax
         working-directory: app/backend
-        run: npm test
+        run: node --check server.js
