@@ -42,7 +42,7 @@ const backendErrorsTotal = new client.Counter({
   registers: [register],
 });
 
-/** 
+/**
  * Allowed Origins
  */
 const allowedOrigins = [
@@ -77,6 +77,12 @@ app.use(express.json());
  * Request Logger & Prometheus Metrics
  */
 app.use((req, res, next) => {
+
+  // Do not include Prometheus scrape requests in application metrics
+  if (req.path === "/metrics") {
+    return next();
+  }
+
   const end = httpRequestDuration.startTimer();
 
   httpRequestsInProgress.inc();
